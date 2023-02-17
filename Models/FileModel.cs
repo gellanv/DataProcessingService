@@ -1,5 +1,4 @@
 ﻿using DataProcessing.FileReader.Interface;
-using Microsoft.Extensions.Configuration;
 
 namespace DataProcessing.Models
 {
@@ -7,20 +6,18 @@ namespace DataProcessing.Models
     {
         protected string FilePath { get; set; }
         public IFileReader FileReader { private get; set; }
-        public int NumberFile { get; set; }
 
         private readonly IConfiguration configuration;
 
-        public FileModel(string path, int numberFile, IFileReader reader, IConfiguration configuration)
+        public FileModel(string path, IFileReader reader, IConfiguration configuration)
         {
             this.FilePath = path;
-            this.NumberFile = numberFile;
             this.FileReader = reader;
             this.configuration = configuration;
         }
-        public void Read()
+        public async Task Read()
         {
-            FileReader.Read(FilePath, NumberFile, configuration);
+            await FileReader.Read(FilePath, configuration);
         }
     }
 }
