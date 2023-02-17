@@ -19,6 +19,7 @@ namespace DataProcessing.Services
                 MetaData.Found_errors = 0;
                 MetaData.Parsed_lines = 0;
                 MetaData.Parsed_files = 0;
+                MetaData.TodayCurrentNumber= 0;
                 MetaData.Invalid_files = new List<string>();
                 return  Task.CompletedTask;
             }

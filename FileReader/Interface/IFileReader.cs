@@ -4,6 +4,6 @@ namespace DataProcessing.FileReader.Interface
 {
     public interface IFileReader
     {
-       Task Read(string filePath, /*int NumberFile,*/ IConfiguration configuration);
+       Task Read(string filePath, int NumberFile, IConfiguration configuration);
     }
 }

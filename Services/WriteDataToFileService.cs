@@ -4,13 +4,13 @@ namespace DataProcessing.Services
 {
     public static class WriteDataToFileService
     {
-        public static void WriteDataToFile(IConfiguration configuration, string jsonString)
+        public static void WriteDataToFile(IConfiguration configuration, string jsonString, int numFile)
         {
             string path = CreateFolderService.CreateFolderIfNotExist(configuration.GetSection("path:folderB").Value!);
 
             try
             {
-                using (FileStream fs = File.OpenWrite($"{path}\\output-{Guid.NewGuid()}.json"))
+                using (FileStream fs = File.OpenWrite($"{path}\\output-{numFile}.json"))
                 {
                     byte[] info = new UTF8Encoding(true).GetBytes(jsonString);
                     fs.Write(info, 0, info.Length);

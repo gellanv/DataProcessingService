@@ -7,6 +7,7 @@ namespace DataProcessing.Models
         public static int Parsed_files { get; set; }
         public static int Parsed_lines { get; set; }
         public static int Found_errors { get; set; }
+        public static int TodayCurrentNumber { get; set; } = 0;
 
         public static List<string> Invalid_files { get; set; } = new List<string>();
 

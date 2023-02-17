@@ -7,7 +7,7 @@ namespace DataProcessing.FileReader
 {
     public class ValidFileReaderCsv : IFileReader
     {
-        public Task Read(string filePath, IConfiguration configuration)
+        public Task Read(string filePath, int numFile, IConfiguration configuration)
         {
             List<string> LinesPart = ReadFileService.ReadFile(filePath, "first_name:");
 
@@ -19,7 +19,7 @@ namespace DataProcessing.FileReader
             try
             {
                 string jsonString = JsonSerializer.Serialize(listObject);
-                WriteDataToFileService.WriteDataToFile(configuration, jsonString);
+                WriteDataToFileService.WriteDataToFile(configuration, jsonString, numFile);
                 MetaData.Parsed_files++;
                 return Task.CompletedTask;
 

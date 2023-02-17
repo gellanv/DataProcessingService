@@ -12,22 +12,23 @@ namespace DataProcessingService.Services
         }
         public async Task ProcessingOneFile(string file)
         {
+            int num = ++MetaData.TodayCurrentNumber;
             FileModel fileModel;
             string extension = Path.GetExtension(file);
 
             if (extension == ".txt")
             {
-                fileModel = new FileModel(file, new ValidFileReaderTxt(), _configuration);
+                fileModel = new FileModel(file, new ValidFileReaderTxt(), _configuration, num);
                 await fileModel.Read();
             }
             else if (extension == ".csv")
             {
-                fileModel = new FileModel(file, new ValidFileReaderCsv(), _configuration);
+                fileModel = new FileModel(file, new ValidFileReaderCsv(), _configuration, num);
                 await fileModel.Read();
             }
             else
             {
-                fileModel = new FileModel(file, new InvalidFileReader(), _configuration);
+                fileModel = new FileModel(file, new InvalidFileReader(), _configuration, num);
                 await fileModel.Read();
             }
 

@@ -5,13 +5,13 @@ namespace DataProcessing.FileReader
 {
     public class InvalidFileReader : IFileReader
     {
-        public Task Read(string filePath, IConfiguration configuration)
+        public Task Read(string filePath, int numFile, IConfiguration configuration)
         {
             string path = configuration.GetSection("path:folderA").Value + "\\invalid\\";
 
             Directory.CreateDirectory(path);
 
-            string newPath = path + Path.GetFileName(filePath) + Guid.NewGuid();
+            string newPath = path + numFile+Path.GetFileName(filePath);
             try
             {
                 if (File.Exists(filePath))
