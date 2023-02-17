@@ -18,7 +18,7 @@ namespace DataProcessingService.Services
             while (true)
             {
                 DateTime dateTime = DateTime.Now;
-                if (dateTime.Hour == 17 && dateTime.Minute == 55 && dateTime.Second == 01 && dateTime.Millisecond == 01)
+                if (dateTime.Hour == 00 && dateTime.Minute == 00 && dateTime.Second == 01 && dateTime.Millisecond == 01)
                 {
                     WriteMetaDataService.WriteMetaDataToFile(configuration);
                 }
