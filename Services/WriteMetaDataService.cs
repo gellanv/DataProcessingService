@@ -5,7 +5,7 @@ namespace DataProcessing.Services
 {
     public static class WriteMetaDataService
     {
-        public static void WriteMetaDataToFile(IConfiguration _configuration)
+        public static Task WriteMetaDataToFile(IConfiguration _configuration)
         {
             string path = CreateFolderService.CreateFolderIfNotExist(_configuration.GetSection("path:folderB").Value!);
             string pathMetaFile = path + "\\meta.log";
@@ -20,10 +20,12 @@ namespace DataProcessing.Services
                 MetaData.Parsed_lines = 0;
                 MetaData.Parsed_files = 0;
                 MetaData.Invalid_files = new List<string>();
+                return  Task.CompletedTask;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                return Task.FromException(ex);
             }
         }
     }

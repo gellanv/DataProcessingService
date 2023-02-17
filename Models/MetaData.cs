@@ -8,7 +8,6 @@ namespace DataProcessing.Models
         public static int Parsed_lines { get; set; }
         public static int Found_errors { get; set; }
 
-        public static Queue<int> QueueNumberFile { get; set; }
         public static List<string> Invalid_files { get; set; } = new List<string>();
 
         public static string WriteToString()

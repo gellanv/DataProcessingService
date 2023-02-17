@@ -1,4 +1,6 @@
+using DataProcessing.Services;
 using DataProcessingService.Services;
+using Microsoft.Extensions.Configuration;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -6,6 +8,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddHostedService<MainWorker>();
         services.AddSingleton<ProcessingFilesService>();
         services.AddSingleton<ProcessingOneFileService>();
+        services.AddSingleton<TrackingTimeForMetaService>();
     })
     .Build();
 host.Run();
@@ -18,13 +21,15 @@ public class MainWorker : IHostedService
     protected readonly IHostApplicationLifetime hostApplicationLifetime;
     protected readonly ProcessingFilesService processingFilesService;
     protected readonly ProcessingOneFileService processingOneFileService;
+    protected readonly TrackingTimeForMetaService trackingTimeForMetaService;
     FileSystemWatcher? watcher;
-    public MainWorker(IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration, ProcessingFilesService processingFilesService, ProcessingOneFileService processingOneFileService)
+    public MainWorker(IHostApplicationLifetime hostApplicationLifetime, IConfiguration configuration, ProcessingFilesService processingFilesService, ProcessingOneFileService processingOneFileService, TrackingTimeForMetaService trackingTimeForMetaService)
     {
         this.hostApplicationLifetime = hostApplicationLifetime;
         this.configuration = configuration;
         this.processingFilesService = processingFilesService;
         this.processingOneFileService = processingOneFileService;
+        this.trackingTimeForMetaService = trackingTimeForMetaService;
     }
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -35,6 +40,8 @@ public class MainWorker : IHostedService
         else
         {
             watcher = new FileSystemWatcher(folderA);
+            Thread myThread1 = new Thread(trackingTimeForMetaService.TrackingTimeForMeta);
+            myThread1.Start();
 
             int counFilesInWork = Directory.GetFiles(folderA).Length;
             if (counFilesInWork > 0)
@@ -44,7 +51,7 @@ public class MainWorker : IHostedService
 
             watcher.IncludeSubdirectories = true;
             watcher.EnableRaisingEvents = true;
-            await Task.CompletedTask;
+            await Task.CompletedTask;          
         }
     }
 
