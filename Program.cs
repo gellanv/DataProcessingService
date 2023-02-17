@@ -15,6 +15,8 @@ public class MainWorker : IHostedService
      .SetBasePath(Directory.GetCurrentDirectory())
      .AddJsonFile($"appsettings.json").Build();
 
+
+
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         
